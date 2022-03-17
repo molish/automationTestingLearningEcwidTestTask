@@ -63,7 +63,7 @@ public class StartPage {
     public boolean allItemsHaveSaleLabels(){
         for(WebElement item:items){
             try{
-                item.findElement(By.xpath("//div[text()='rtr']"));
+                item.findElement(By.xpath("//div[text()='Распродажа']"));
             }catch (NoSuchElementException exception){
                 return false;
             }
