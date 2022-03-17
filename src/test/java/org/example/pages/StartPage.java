@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.NoSuchElementException;
 
 import java.time.Duration;
 import java.util.List;
@@ -31,17 +32,11 @@ public class StartPage {
     @FindBy(css = "button.form-control__ico-btn")
     private WebElement searchBtn;
 
-    //@FindAll({@FindBy(css = "div[class^=\"grid-product--id\"] div.grid-product__title-inner")})
     @FindAll({@FindBy(xpath = "//div[starts-with(@class, 'grid-product grid-product--id')]//div[@class='grid-product__title-inner']")})
     private List<WebElement> items;
 
     @FindBy(xpath = "//div[starts-with(@class, 'grid__products')]")
     private WebElement gridProducts;
-
-    //@FindAll({@FindBy(css = "div[class^=\"grid-product--id\"] div.label--notice:Распродажа")})
-    //@FindAll({@FindBy(xpath = "//div[starts-with(@class, 'grid-product grid-product--id')]//div[@class='label--notice' and text()='Распродажа']")})
-    @FindAll({@FindBy(xpath = "//div[text()='Распродажа']")})
-    private List<WebElement> saleLabels;
 
     public void waitRefreshing(){
         String oldListSize = gridProducts.getAttribute("data-items");
@@ -53,30 +48,25 @@ public class StartPage {
         saleCheckBox.click();
     }
 
-    public void clickSearchBtn(){
-        searchBtn.click();
-    }
-
     public void inputKeywordTextField(String keyword){
         keyWordInputText.sendKeys(keyword);
-    }
-
-    public void clearInputKeywordTextField(){
-        keyWordInputText.clear();
-    }
-
-    public int getCountItems(){
-        return items.size();
-    }
-
-    public int getCountSaleLabels(){
-        return saleLabels.size();
     }
 
     public boolean checkAllItemsNameContainsKeyword(String keyword){
         for (WebElement itemName:items) {
             if(!itemName.getText().contains(keyword))
                 return false;
+        }
+        return true;
+    }
+
+    public boolean allItemsHaveSaleLabels(){
+        for(WebElement item:items){
+            try{
+                item.findElement(By.xpath("//div[text()='rtr']"));
+            }catch (NoSuchElementException exception){
+                return false;
+            }
         }
         return true;
     }

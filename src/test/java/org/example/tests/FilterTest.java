@@ -42,10 +42,7 @@ public class FilterTest {
     public void saleFilterTest() {
         startPage.clickSaleCheckBox();
         startPage.waitRefreshing();
-        int countElementsDisplayed = startPage.getCountItems();
-        int countElementsWithSaleLAbel = startPage.getCountSaleLabels();
-        startPage.clickSaleCheckBox();
-        Assert.assertEquals(countElementsDisplayed, countElementsWithSaleLAbel);
+        Assert.assertTrue(startPage.allItemsHaveSaleLabels());
     }
 
     @Test
