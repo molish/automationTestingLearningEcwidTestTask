@@ -36,6 +36,7 @@ public class FilterTest {
     }
 
     @Test
+    @Step
     @Severity(SeverityLevel.NORMAL)
     @Story("User tries to select sale items")
     @Description("Press sale check box and check if displayed items have sale label")
@@ -46,6 +47,7 @@ public class FilterTest {
     }
 
     @Test
+    @Step
     @Severity(SeverityLevel.NORMAL)
     @Story("User tries select keyword items")
     @Description("Inpt keyword in search text field and check if all items have keyword in their names")
